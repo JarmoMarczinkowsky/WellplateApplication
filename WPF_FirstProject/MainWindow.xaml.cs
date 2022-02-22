@@ -243,7 +243,8 @@ namespace WPF_FirstProject
                             {
                                 countAlphabet += 1;
                             }
-                            lblCoordinateAlphabet.Content = alphabet[countAlphabet2].ToString() + alphabet[countAlphabet].ToString();
+                            //lblCoordinateAlphabet.Content = alphabet[countAlphabet2].ToString() + alphabet[countAlphabet].ToString();
+                            lblCoordinateAlphabet.Content = alphabet[h].ToString();
                             //lblCoordinateAlphabet.Background = Brushes.Aquamarine;
                             lblCoordinateAlphabet.Margin = new Thickness(0, -202 + (h * EllipseSize * EllipseDistance), -400, 0);
                             lblCoordinateAlphabet.Foreground = Brushes.Black;

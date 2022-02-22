@@ -34,9 +34,10 @@
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
                 <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
             </ComboBox>
+            
 
         </Grid>
-        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="20" HorizontalAlignment="Right" Margin="90,411,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" Margin="90,470,0,0" VerticalAlignment="Top"/>
 
         <Grid PreviewMouseDown="Grid_PreviewMouseDown" x:Name="gMyGrid">
         </Grid>
