@@ -27,12 +27,20 @@ namespace WPF_FirstProject
         public MainWindow()
         {
             InitializeComponent();
+            //Generates array of strings, sorts them and aadds them to the 'empty wells' combobox
+            string[] emptyWellColors = { "Blue", "Red", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            Array.Sort(emptyWellColors, StringComparer.InvariantCulture);
 
-            string[] myColors = { "Blue", "Green", "Brown", "Gray", "Red", "Pink", "Yellow", "Beige", "Aqua" };
-            Array.Sort(myColors, StringComparer.InvariantCulture);
+            foreach (var emptyColor in emptyWellColors)
+            {
+                cbChooseEmptyColor.Items.Add(emptyColor);
+            }
 
+            //Generates array of strings, sorts them and adds them to the 'chosen wells' combobox
+            string[] choosenWellColors = { "Blue", "Black", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            Array.Sort(choosenWellColors, StringComparer.InvariantCulture);
 
-            foreach (var myColor in myColors)
+            foreach (var myColor in choosenWellColors)
             {
                 cbChooseColor.Items.Add(myColor);
             }
@@ -45,10 +53,13 @@ namespace WPF_FirstProject
         
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            //this takes care of the colors of the circles.
+
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-            Debug.WriteLine(chosenColor);
-            //string 
+            string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+
             var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
+            var convertEmptyColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
 
 
             foreach(object child in gMyGrid.Children)
@@ -63,14 +74,14 @@ namespace WPF_FirstProject
                     {
                         string cleanCoordinate = ellipse.Name.Replace("n", "").Replace("_", ":");
                         txbBlockTester.Text = $"{txbBlockTester.Text}\r\n{cleanCoordinate}"; 
-                        if (brush.Color == Colors.Black)
-                        {
-                            ellipse.Fill = new SolidColorBrush(Colors.Red);
-                            
-                        }
-                        else if(brush.Color == Colors.Red)
+                        if (brush.Color == convertEmptyColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertColor);
+                            
+                        }
+                        else if(brush.Color == convertColor)
+                        {
+                            ellipse.Fill = new SolidColorBrush(convertEmptyColor);
                             
                         }
                     }
@@ -82,11 +93,14 @@ namespace WPF_FirstProject
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            var resetColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+            
             foreach (object child in gMyGrid.Children)
             {
                 Ellipse ellipse = child as Ellipse;
 
-                ellipse.Fill = new SolidColorBrush(Colors.Black);
+                ellipse.Fill = new SolidColorBrush(resetColor);
 
                 //ellipse.Fill = new SolidColorBrush(Colors.AliceBlue);
             }
@@ -98,6 +112,9 @@ namespace WPF_FirstProject
 
         private void btnApply(object sender, RoutedEventArgs e)
         {
+            string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            var convertEmptyWells = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+
             float spacePerCircle = 0;
             string selectItem = "";
             string selectItemFormat = "";
@@ -152,6 +169,8 @@ namespace WPF_FirstProject
 
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+            //generates rows and colums of circles
+
             for (int h = 0; h < myLength; h++)
             {
                 
@@ -160,7 +179,7 @@ namespace WPF_FirstProject
                     
                     Ellipse ellipse = new Ellipse();
                     
-                    ellipse.Fill = new SolidColorBrush(Colors.Black);
+                    ellipse.Fill = new SolidColorBrush(convertEmptyWells);
                     ellipse.Height = EllipseSize;
                     ellipse.Width = EllipseSize;
                     ellipse.Name = $"n{alphabet[h]}_{myWidth - w - 1}";
@@ -177,7 +196,7 @@ namespace WPF_FirstProject
                         lblCoordinateNum.FontSize = EllipseSize / EllipseDistance;
                         lblCoordinateNum.Height = EllipseSize * 1.1;
                         lblCoordinateNum.Width = EllipseSize;
-                        lblCoordinateNum.Background = Brushes.Red;
+                        //lblCoordinateNum.Background = Brushes.Red;
                         lblCoordinateNum.Content = myWidth - w - 1;
 
                         lblCoordinateNum.Margin = new Thickness(0, -250, -205 + (w * EllipseSize * EllipseDistance) + 3, 0);
@@ -205,7 +224,7 @@ namespace WPF_FirstProject
                             countAlphabet += 1;
                         }
                         lblCoordinateAlphabet.Content = alphabet[countAlphabet2].ToString() + alphabet[countAlphabet].ToString();
-                        lblCoordinateAlphabet.Background = Brushes.Aquamarine;
+                        //lblCoordinateAlphabet.Background = Brushes.Aquamarine;
                         lblCoordinateAlphabet.Margin = new Thickness(0, -202 + (h * EllipseSize * EllipseDistance), -400, 0);
                         lblCoordinateAlphabet.Foreground = Brushes.Black;
 

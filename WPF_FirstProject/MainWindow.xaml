@@ -25,8 +25,12 @@
                 <ComboBoxItem>16 x 24</ComboBoxItem>
             </ComboBox>
             <TextBox x:Name="txbSize"  HorizontalAlignment="Left" Margin="672,181,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="37" FontSize="25"/>
-            <Label Content="Choose dot color" HorizontalAlignment="Left" Margin="790,120,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <Label Content="Chosen wells color" HorizontalAlignment="Left" Margin="700,120,0,0" FontSize="20" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseColor" Margin="951,120,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
+                <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
+            </ComboBox>
+
+            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
                 <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
             </ComboBox>
 
