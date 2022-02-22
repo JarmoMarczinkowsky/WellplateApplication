@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WPF_FirstProject\\WPF_FirstProject.csproj",
+      "projectUniqueName": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WellplateApplication\\WPF_FirstProject\\WPF_FirstProject.csproj",
       "projectName": "WPF_FirstProject",
-      "projectPath": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WPF_FirstProject\\WPF_FirstProject.csproj",
+      "projectPath": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WellplateApplication\\WPF_FirstProject\\WPF_FirstProject.csproj",
       "packagesPath": "C:\\Users\\jarmo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WPF_FirstProject\\obj\\",
+      "outputPath": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WellplateApplication\\WPF_FirstProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

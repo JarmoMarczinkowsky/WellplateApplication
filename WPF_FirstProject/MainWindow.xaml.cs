@@ -22,11 +22,21 @@ namespace WPF_FirstProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        
+
+
         public MainWindow()
         {
             InitializeComponent();
+
+            string[] myColors = { "Blue", "Green", "Brown", "Gray", "Red", "Pink", "Yellow", "Beige", "Aqua" };
+            Array.Sort(myColors, StringComparer.InvariantCulture);
+
+
+            foreach (var myColor in myColors)
+            {
+                cbChooseColor.Items.Add(myColor);
+            }
+
 
             txbBlockTester.Text = "";
 
@@ -35,7 +45,12 @@ namespace WPF_FirstProject
         
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+            string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            Debug.WriteLine(chosenColor);
+            //string 
+            var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
+
+
             foreach(object child in gMyGrid.Children)
             {
                 Ellipse ellipse = child as Ellipse;
@@ -55,7 +70,7 @@ namespace WPF_FirstProject
                         }
                         else if(brush.Color == Colors.Red)
                         {
-                            ellipse.Fill = new SolidColorBrush(Colors.Black);
+                            ellipse.Fill = new SolidColorBrush(convertColor);
                             
                         }
                     }
