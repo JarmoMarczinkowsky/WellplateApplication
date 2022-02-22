@@ -50,9 +50,14 @@ namespace WPF_FirstProject
 
         }
 
-        
+        int countColored;
+        int myLength;
+        int myWidth;
+
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            
+
             //this takes care of the colors of the circles.
 
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
@@ -74,23 +79,28 @@ namespace WPF_FirstProject
                     {
                         string cleanCoordinate = ellipse.Name.Replace("n", "");
                         string[] sepCoorFromNumber = cleanCoordinate.Split("_");
-                        Debug.WriteLine(sepCoorFromNumber[0]);
+                        //Debug.WriteLine(sepCoorFromNumber[0]);
+                        
                         txbBlockTester.Text = $"{txbBlockTester.Text}\r\n{sepCoorFromNumber[0]}:{sepCoorFromNumber[1]}\t nr. {sepCoorFromNumber[2]}"; 
+                        
                         if (brush.Color == convertEmptyColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertColor);
+                            countColored += 1;
                             
                         }
                         else if(brush.Color == convertColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertEmptyColor);
-                            
+                            countColored -= 1;
                         }
                     }
 
 
                 }
             }
+
+            lblUncolored.Content = $"Gekleurde hokjes: {countColored}\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -109,6 +119,9 @@ namespace WPF_FirstProject
 
             txbBlockTester.Text = "";
 
+            countColored = 0;
+            Debug.WriteLine(countColored);
+
 
             
         }
@@ -122,8 +135,8 @@ namespace WPF_FirstProject
             string selectItem = "";
             string selectItemFormat = "";
             string[] myArray = new string[0];
-            int myLength;
-            int myWidth;
+            //int myLength;
+            //int myWidth;
             int ellipseCounter = 0;
 
             gMyGrid.Children.Clear();
@@ -145,7 +158,7 @@ namespace WPF_FirstProject
 
             lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
-            Debug.WriteLine($"-_{selectItemFormat}_-");
+            //Debug.WriteLine($"-_{selectItemFormat}_-");
             myArray = selectItemFormat.Split("x");
 
             if (checkRotate.IsChecked == false)
@@ -158,10 +171,7 @@ namespace WPF_FirstProject
             {
                 myLength = int.Parse(myArray[1].Trim());
                 myWidth = int.Parse(myArray[0].Trim());
-
             }
-
-
 
             if (myLength < 27 && myWidth < 27)
             {
@@ -288,5 +298,50 @@ namespace WPF_FirstProject
         {
             this.Close();
         }
+
+        private void ViewCoordinate(object sender, RoutedEventArgs e)
+        {
+            string selectItem;
+            string selectItemFormat;
+            string[] myArray;
+            int myWidth;
+            int myLength;
+
+            if (txbCoordinatePicker.Text != "")
+            {
+                int numberInTxb = int.Parse(txbCoordinatePicker.Text);
+                
+                if (txbSize.Text.Contains("x"))
+                {
+                    selectItem = txbSize.Text;
+                    selectItemFormat = selectItem;
+                }
+                else
+                {
+                    selectItem = cbBox.SelectedItem.ToString();
+
+                    selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+                }
+
+                //lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
+
+                //Debug.WriteLine($"-_{selectItemFormat}_-");
+                myArray = selectItemFormat.Split("x");
+
+                if (checkRotate.IsChecked == false)
+                {
+                    myLength = int.Parse(myArray[0].Trim());
+                    myWidth = int.Parse(myArray[1].Trim());
+
+                }
+                else
+                {
+                    myLength = int.Parse(myArray[1].Trim());
+                    myWidth = int.Parse(myArray[0].Trim());
+                }
+            }
+        }
+
+        
     }
 }
