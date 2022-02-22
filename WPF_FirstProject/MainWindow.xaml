@@ -30,11 +30,13 @@
                 <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
             </ComboBox>
 
+            <Label Content="Empty wells color" HorizontalAlignment="Left" Margin="700,60,0,0" FontSize="20" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
                 <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
             </ComboBox>
 
         </Grid>
+        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="20" HorizontalAlignment="Right" Margin="90,411,0,0" VerticalAlignment="Top"/>
 
         <Grid PreviewMouseDown="Grid_PreviewMouseDown" x:Name="gMyGrid">
         </Grid>
@@ -42,7 +44,7 @@
         <Label x:Name="lblDebugLabel" Content="Grootte" HorizontalAlignment="Right" Margin="784,602,0,0" VerticalAlignment="Bottom"/>
         <Button Content="Reset kleur" HorizontalAlignment="Right" Margin="0,615,0,0" VerticalAlignment="Top" Click="Button_Click" Height="81" Width="252" FontSize="24"/>
         <Button Content="Toepassen" HorizontalAlignment="Right" Margin="0,529,0,0" VerticalAlignment="Top" Click="btnApply" Height="81" Width="252" FontSize="30"/>
-        <Button Content="Voeg waarde toe" HorizontalAlignment="Right" Margin="0,443,0,0" VerticalAlignment="Top" Click="addValue" Height="81" Width="252" FontSize="30"/>
+        <!--<Button Content="Voeg waarde toe" HorizontalAlignment="Right" Margin="0,443,0,0" VerticalAlignment="Top" Click="addValue" Height="81" Width="252" FontSize="30"/>-->
         <TextBlock HorizontalAlignment="Left" x:Name="txbBlockTester" Margin="10,10,0,0" Text="Test in progress..." TextWrapping="Wrap" VerticalAlignment="Top"/>
     </Grid>
 
