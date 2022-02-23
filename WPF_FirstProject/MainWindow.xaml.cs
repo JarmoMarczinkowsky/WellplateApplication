@@ -54,6 +54,8 @@ namespace WPF_FirstProject
         int myLength;
         int myWidth;
         List<string> myCoordinates = new List<string>();
+        List<string> coloredCircle = new List<string>();
+        List<string> notColoredCircle = new List<string>(); 
 
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -89,18 +91,23 @@ namespace WPF_FirstProject
                         {
                             ellipse.Fill = new SolidColorBrush(convertColor);
                             countColored += 1;
-                            //test.Append("test");
+                            coloredCircle.Add(ellipse.Name);
                             
                         }
                         else if(brush.Color == convertColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertEmptyColor);
-                            countColored -= 1;
+                            coloredCircle.Remove(ellipse.Name);
                         }
                         
                     }
 
 
+                }
+
+                foreach (string myColoredCircle in coloredCircle)
+                {
+                    lblUncoloredList.Content = $"{lblUncoloredList.Content}\r\n{myColoredCircle}";
                 }
             }
 
