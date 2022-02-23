@@ -42,16 +42,19 @@
         <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" Margin="90,470,0,0" VerticalAlignment="Top"/>
 
         <Grid PreviewMouseDown="Grid_PreviewMouseDown" x:Name="gMyGrid">
+            <Grid.RenderTransform>
+                <RotateTransform Angle="0"/>
+            </Grid.RenderTransform>
         </Grid>
 
-        <Label x:Name="lblUncolored" Content="Grootte" HorizontalAlignment="Left" Margin="0,602,0,0" VerticalAlignment="Bottom"/>
+        <Label x:Name="lblUncolored" FontSize="20" Content="Grootte" HorizontalAlignment="Left" Margin="0,602,0,0" VerticalAlignment="Bottom"/>
 
 
         <Label x:Name="lblDebugLabel" Content="Grootte" HorizontalAlignment="Right" Margin="784,602,0,0" VerticalAlignment="Bottom"/>
         <Button Content="Reset kleur" HorizontalAlignment="Right" Margin="0,615,0,0" VerticalAlignment="Top" Click="Button_Click" Height="81" Width="252" FontSize="24"/>
         <Button Content="Toepassen" HorizontalAlignment="Right" Margin="0,529,0,0" VerticalAlignment="Top" Click="btnApply" Height="81" Width="252" FontSize="30"/>
         <!--<Button Content="Voeg waarde toe" HorizontalAlignment="Right" Margin="0,443,0,0" VerticalAlignment="Top" Click="addValue" Height="81" Width="252" FontSize="30"/>-->
-        <TextBlock HorizontalAlignment="Left" x:Name="txbBlockTester" Margin="10,10,0,0" Text="Test in progress..." TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" x:Name="txbBlockTester" FontSize="25" Margin="10,10,0,0" Text="Test in progress..." TextWrapping="Wrap" VerticalAlignment="Top"/>
     </Grid>
 
 

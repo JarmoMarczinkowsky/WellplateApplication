@@ -53,6 +53,7 @@ namespace WPF_FirstProject
         int countColored;
         int myLength;
         int myWidth;
+        List<string> myCoordinates = new List<string>();
 
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -62,6 +63,7 @@ namespace WPF_FirstProject
 
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            
 
             var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
             var convertEmptyColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
@@ -79,14 +81,15 @@ namespace WPF_FirstProject
                     {
                         string cleanCoordinate = ellipse.Name.Replace("n", "");
                         string[] sepCoorFromNumber = cleanCoordinate.Split("_");
-                        //Debug.WriteLine(sepCoorFromNumber[0]);
                         
-                        txbBlockTester.Text = $"{txbBlockTester.Text}\r\n{sepCoorFromNumber[0]}:{sepCoorFromNumber[1]}\t nr. {sepCoorFromNumber[2]}"; 
+                        
+                        txbBlockTester.Text = $"{sepCoorFromNumber[0]}:{sepCoorFromNumber[1]}\t nr. {sepCoorFromNumber[2]}"; 
                         
                         if (brush.Color == convertEmptyColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertColor);
                             countColored += 1;
+                            //test.Append("test");
                             
                         }
                         else if(brush.Color == convertColor)
@@ -94,15 +97,22 @@ namespace WPF_FirstProject
                             ellipse.Fill = new SolidColorBrush(convertEmptyColor);
                             countColored -= 1;
                         }
+                        
                     }
 
 
                 }
             }
 
-            lblUncolored.Content = $"Gekleurde hokjes: {countColored}\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}";
+            lblUncolored.Content = $"Gekleurde hokjes: " + countColored + $"\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}";
+            //string[] lblFilter = lblUncolored.Content.ToString().Remove(0, 18).Split("\r\n");
+
+
+            //Debug.WriteLine(lblFilter);
         }
 
+
+        //this is the function to reset the colors in the circles
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
@@ -120,7 +130,7 @@ namespace WPF_FirstProject
             txbBlockTester.Text = "";
 
             countColored = 0;
-            Debug.WriteLine(countColored);
+            //Debug.WriteLine(countColored);
 
 
             
@@ -156,39 +166,32 @@ namespace WPF_FirstProject
                 selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             }
 
+            //gMyGrid.RenderTransform = 90;
+
             lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
             //Debug.WriteLine($"-_{selectItemFormat}_-");
             myArray = selectItemFormat.Split("x");
+            myLength = int.Parse(myArray[0].Trim());
+            myWidth = int.Parse(myArray[1].Trim());
 
-            if (checkRotate.IsChecked == false)
-            {
-                myLength = int.Parse(myArray[0].Trim());
-                myWidth = int.Parse(myArray[1].Trim());
-
-            }
-            else
-            {
-                myLength = int.Parse(myArray[1].Trim());
-                myWidth = int.Parse(myArray[0].Trim());
-            }
-
+           //calculates the size
             if (myLength < 27 && myWidth < 27)
             {
-                float totalSizeField = 840;
+                float totalSizeField = 600;
                 float EllipseDistance = 2F; //(float)(60.0 / EllipseSize)
 
                 if (myWidth > 1)
                 {
-                    spacePerCircle = totalSizeField / (myWidth - 1);
+                    spacePerCircle = totalSizeField / (myLength - 1);
                 }
                 else if (myWidth == 1)
                 {
-                    spacePerCircle = (float)(totalSizeField / myWidth);
+                    spacePerCircle = (float)(totalSizeField / myLength);
                 }
 
-                float EllipseSize = (spacePerCircle) / EllipseDistance;
-
+                float EllipseSize = spacePerCircle / EllipseDistance;
+                //Debug.WriteLine(myLength * EllipseDistance * EllipseSize);
 
                 //int EllipseSize = 140;
 
@@ -213,6 +216,8 @@ namespace WPF_FirstProject
                         ellipse.Width = EllipseSize;
                         //Debug.WriteLine($"n{alphabet[h]}_{myWidth - w - 1}");
                         ellipse.Name = $"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}";
+                        //Debug.WriteLine($"|||{ellipse.Name}|||");
+                        myCoordinates.Add($"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}");
 
                         ellipse.Margin = new Thickness(200, (h * (EllipseSize * EllipseDistance)), w * (EllipseSize * EllipseDistance), 200);
 
@@ -231,6 +236,8 @@ namespace WPF_FirstProject
 
                             lblCoordinateNum.Margin = new Thickness(0, -250, -205 + (w * EllipseSize * EllipseDistance) + 3, 0);
                             lblCoordinateNum.Foreground = Brushes.Black;
+
+                            
 
                             gLabelTest.Children.Add(lblCoordinateNum);
 
@@ -265,10 +272,18 @@ namespace WPF_FirstProject
                         ellipseCounter += 1;
 
                     }
+
+                    //gMyGrid.RenderTransform
                 }
 
                 //Debug.WriteLine($"TC: {totalCircles}");
                 txbSize.Text = "";
+                //Debug.WriteLine(myCoordinates);
+                //foreach (string coordinate in myCoordinates)
+                //{
+                //    Debug.WriteLine($"||{coordinate}||");
+                //}
+                
 
             }
             else
@@ -301,44 +316,31 @@ namespace WPF_FirstProject
 
         private void ViewCoordinate(object sender, RoutedEventArgs e)
         {
-            string selectItem;
-            string selectItemFormat;
-            string[] myArray;
-            int myWidth;
-            int myLength;
-
             if (txbCoordinatePicker.Text != "")
             {
                 int numberInTxb = int.Parse(txbCoordinatePicker.Text);
-                
-                if (txbSize.Text.Contains("x"))
+
+                foreach (string coordinate in myCoordinates)
                 {
-                    selectItem = txbSize.Text;
-                    selectItemFormat = selectItem;
+                    if (coordinate.Contains(txbCoordinatePicker.Text))
+                    {
+                        Debug.WriteLine(coordinate);
+                        string[] splitCoordinate = coordinate.Replace("n", "").Split("_");
+                        if (splitCoordinate[2] == txbCoordinatePicker.Text.Trim())
+                        {
+                            string convertedCoordinate = $"{splitCoordinate[0]}{splitCoordinate[1]}";
+                            MessageBox.Show(convertedCoordinate);
+                        }
+                        
+                    }
                 }
-                else
-                {
-                    selectItem = cbBox.SelectedItem.ToString();
 
-                    selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
-                }
 
-                //lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
-                //Debug.WriteLine($"-_{selectItemFormat}_-");
-                myArray = selectItemFormat.Split("x");
-
-                if (checkRotate.IsChecked == false)
-                {
-                    myLength = int.Parse(myArray[0].Trim());
-                    myWidth = int.Parse(myArray[1].Trim());
-
-                }
-                else
-                {
-                    myLength = int.Parse(myArray[1].Trim());
-                    myWidth = int.Parse(myArray[0].Trim());
-                }
+            }
+            else
+            {
+                MessageBox.Show("Test");
             }
         }
 
