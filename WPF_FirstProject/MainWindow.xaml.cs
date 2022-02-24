@@ -394,7 +394,7 @@ namespace WPF_FirstProject
                 {
                     if (coordinate.Contains(txbCoordinatePicker.Text))
                     {
-                        Debug.WriteLine(coordinate);
+                        //Debug.WriteLine(coordinate);
                         string[] splitCoordinate = coordinate.Replace("n", "").Split("_");
                         if (splitCoordinate[2] == txbCoordinatePicker.Text.Trim())
                         {
@@ -405,8 +405,6 @@ namespace WPF_FirstProject
                     }
                 }
 
-
-
             }
             else
             {
@@ -414,6 +412,43 @@ namespace WPF_FirstProject
             }
         }
 
-        
+        private void CoordinateToColor(object sender, RoutedEventArgs e)
+        {
+            int checkNumber;
+            string formatCoordinate;
+            //string formatNumber;
+            string emptyWellsColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            var coordinateColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+
+            foreach (object child in gMyGrid.Children)
+            {
+                Ellipse ellipse = child as Ellipse;
+
+                if (int.TryParse(txbColorCreator.Text.Trim(), out checkNumber))
+                {
+                    //Debug.WriteLine($"{txbColorCreator.Text} is a number");
+                    if (ellipse.Name.Split("_")[2].Contains(txbColorCreator.Text.Trim()))
+                    {
+                        ellipse.Fill = new SolidColorBrush(coordinateColor);
+                    }
+                }
+                else
+                {
+                    //Debug.WriteLine($"{txbColorCreator.Text} is alphabetic");
+                    //formatCoordinate = txbColorCreator.Text.ToUpper();
+                    formatCoordinate = $"n{txbColorCreator.Text[0].ToString().ToUpper()}_{txbColorCreator.Text.Split(txbColorCreator.Text[0])[1]}";
+                   
+                    if (ellipse.Name.Contains(formatCoordinate))
+                    {
+                        ellipse.Fill = new SolidColorBrush(coordinateColor);
+                    }
+                }
+
+            }
+
+            
+
+            
+        }
     }
 }
