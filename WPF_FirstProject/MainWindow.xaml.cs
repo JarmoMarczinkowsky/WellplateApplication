@@ -173,6 +173,8 @@ namespace WPF_FirstProject
             {
                 Ellipse ellipse = child as Ellipse;
 
+                notColoredCircle.Add(ellipse.Name);
+
                 ellipse.Fill = new SolidColorBrush(resetColor);
 
                 //ellipse.Fill = new SolidColorBrush(Colors.AliceBlue);
