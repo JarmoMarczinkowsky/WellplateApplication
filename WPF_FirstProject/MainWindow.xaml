@@ -46,7 +46,7 @@
                 <RotateTransform Angle="0"/>
             </Grid.RenderTransform>
         </Grid>
-        <Label x:Name="lblUncoloredList" Content="test" HorizontalAlignment="Left" Margin="39,72,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblUncoloredList" FontSize="20" Content="a" HorizontalAlignment="Left" Margin="0,0,0,22" VerticalAlignment="Bottom"/>
 
         <Label x:Name="lblUncolored" FontSize="20" Content="Grootte" HorizontalAlignment="Left" Margin="0,602,0,0" VerticalAlignment="Bottom"/>
 

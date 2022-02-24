@@ -59,21 +59,29 @@ namespace WPF_FirstProject
 
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            
 
+            string formatColorCircle = "";
+            string formatNotColorCircle = "";
             //this takes care of the colors of the circles.
 
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+
             
 
             var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
             var convertEmptyColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
 
+            int spamCounter = 0;
 
-            foreach(object child in gMyGrid.Children)
+            //notColoredCircle.Clear();
+
+            foreach (object child in gMyGrid.Children)
             {
                 Ellipse ellipse = child as Ellipse;
+
+                spamCounter += 1;
+                
                 
                 if (((Ellipse)child).IsMouseOver)
                 {
@@ -92,12 +100,20 @@ namespace WPF_FirstProject
                             ellipse.Fill = new SolidColorBrush(convertColor);
                             countColored += 1;
                             coloredCircle.Add(ellipse.Name);
+                            notColoredCircle.Remove(ellipse.Name);
                             
                         }
                         else if(brush.Color == convertColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertEmptyColor);
+                            countColored -= 1;
                             coloredCircle.Remove(ellipse.Name);
+
+                            if (notColoredCircle.Contains(ellipse.Name) == false)
+                            {
+                                notColoredCircle.Add(ellipse.Name);
+                            }
+
                         }
                         
                     }
@@ -105,13 +121,36 @@ namespace WPF_FirstProject
 
                 }
 
-                foreach (string myColoredCircle in coloredCircle)
-                {
-                    lblUncoloredList.Content = $"{lblUncoloredList.Content}\r\n{myColoredCircle}";
-                }
+                
             }
 
-            lblUncolored.Content = $"Gekleurde hokjes: " + countColored + $"\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}";
+            lblUncolored.Content = "";
+
+            Debug.WriteLine(spamCounter);
+            //lblUncoloredList.Content = "Colored circles\r\n";
+            lblUncolored.Content = $"Gekleurde hokjes: {countColored}\t";
+            
+            foreach (string myColoredCircle in coloredCircle)
+            {
+                formatColorCircle = $"{myColoredCircle.Replace("n", "").Split("_")[0]}:{myColoredCircle.Replace("n", "").Split("_")[1]}";
+                lblUncolored.Content += $"[{formatColorCircle}], ";
+                //Debug.WriteLine(myColoredCircle);
+            }
+
+
+            notColoredCircle.Sort();
+            lblUncoloredList.Content = "";
+            lblUncoloredList.Content = $"\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}\t";
+
+            foreach (string circleWithoutColor in notColoredCircle)
+            {
+                formatNotColorCircle = $"{circleWithoutColor.Replace("n", "").Split("_")[0]}:{circleWithoutColor.Replace("n", "").Split("_")[1]}";
+                lblUncoloredList.Content += $"[{formatNotColorCircle}], ";
+                //Debug.WriteLine(myColoredCircle);
+            }
+            //notColoredCircle.Clear();
+
+            //lblUncolored.Content = $"Gekleurde hokjes: " + countColored + $"\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}";
             //string[] lblFilter = lblUncolored.Content.ToString().Remove(0, 18).Split("\r\n");
 
 
@@ -124,6 +163,11 @@ namespace WPF_FirstProject
         {
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             var resetColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+
+            coloredCircle.Clear();
+            notColoredCircle.Clear();
+            lblUncoloredList.Content = "";
+
             
             foreach (object child in gMyGrid.Children)
             {
@@ -225,6 +269,11 @@ namespace WPF_FirstProject
                         ellipse.Name = $"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}";
                         //Debug.WriteLine($"|||{ellipse.Name}|||");
                         myCoordinates.Add($"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}");
+                        
+                        if (notColoredCircle.Contains(ellipse.Name) == false)
+                        {
+                            notColoredCircle.Add(ellipse.Name);
+                        }
 
                         ellipse.Margin = new Thickness(200, (h * (EllipseSize * EllipseDistance)), w * (EllipseSize * EllipseDistance), 200);
 
