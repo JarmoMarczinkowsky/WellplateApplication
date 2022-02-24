@@ -18,28 +18,35 @@
 
         <Grid HorizontalAlignment="Right">
 
+            <Label Content="Empty wells color" HorizontalAlignment="Left" Margin="700,60,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
+                <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
+            </ComboBox>
+            
+            <Label Content="Chosen wells color" HorizontalAlignment="Left" Margin="700,120,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseColor" Margin="951,120,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
+                <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
+            </ComboBox>
+
+            <Label Content="Add width x height " HorizontalAlignment="Left" Margin="700,180,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <TextBox x:Name="txbSize"  HorizontalAlignment="Left" Margin="900,181,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="37" FontSize="25"/>
             <ComboBox x:Name="cbBox" HorizontalAlignment="Right" Margin="890,181,0,0" VerticalAlignment="Top" Width="200" Height="40" FontSize="20">
                 <ComboBoxItem IsSelected="True">4 x 6</ComboBoxItem>
                 <ComboBoxItem>6 x 8</ComboBoxItem>
                 <ComboBoxItem>8 x 12</ComboBoxItem>
                 <ComboBoxItem>16 x 24</ComboBoxItem>
             </ComboBox>
-            <TextBox x:Name="txbSize"  HorizontalAlignment="Left" Margin="672,181,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="37" FontSize="25"/>
-            <Label Content="Chosen wells color" HorizontalAlignment="Left" Margin="700,120,0,0" FontSize="20" VerticalAlignment="Top"/>
-            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseColor" Margin="951,120,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
+
+            <Label Content="Add stroke color" HorizontalAlignment="Left" Margin="700,240,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseStroke" Margin="951,240,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
                 <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
             </ComboBox>
 
-            <Label Content="Empty wells color" HorizontalAlignment="Left" Margin="700,60,0,0" FontSize="20" VerticalAlignment="Top"/>
-            <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
-                <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
-            </ComboBox>
-            
 
-            <TextBox HorizontalAlignment="Right" x:Name="txbCoordinatePicker" Margin="1031,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
-            <Button HorizontalAlignment="Left" x:Name="btnCoordinatePicker" Click="ViewCoordinate" Content="number to coördinate" Margin="800,-310,0,0"  FontSize="20" Width="200" Height="40"/>
+            <TextBox HorizontalAlignment="Right" x:Name="txbCoordinatePicker" Margin="1031,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
+            <Button HorizontalAlignment="Left" x:Name="btnCoordinatePicker" Click="ViewCoordinate" Content="number to coordinate" VerticalAlignment="Top" Margin="700, 300,0,0"  FontSize="20" Width="200" Height="40"/>
         </Grid>
-        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" Margin="90,470,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" Margin="0,470,30, 0" VerticalAlignment="Top"/>
 
         <Grid PreviewMouseDown="Grid_PreviewMouseDown" x:Name="gMyGrid">
             <Grid.RenderTransform>

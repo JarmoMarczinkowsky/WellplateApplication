@@ -37,14 +37,16 @@ namespace WPF_FirstProject
             }
 
             //Generates array of strings, sorts them and adds them to the 'chosen wells' combobox
-            string[] choosenWellColors = { "Blue", "Black", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
-            Array.Sort(choosenWellColors, StringComparer.InvariantCulture);
+            string[] chosenWellColors = { "Blue", "Black", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            Array.Sort(chosenWellColors, StringComparer.InvariantCulture);
 
-            foreach (var myColor in choosenWellColors)
+            foreach (var myColor in chosenWellColors)
             {
                 cbChooseColor.Items.Add(myColor);
+                cbChooseStroke.Items.Add(myColor);
             }
 
+            
 
             txbBlockTester.Text = "";
 
@@ -66,11 +68,11 @@ namespace WPF_FirstProject
 
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-
-            
+            string chosenStrokeColor = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
 
             var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
             var convertEmptyColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+            var convertStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStrokeColor);
 
             int spamCounter = 0;
 
@@ -98,6 +100,7 @@ namespace WPF_FirstProject
                         if (brush.Color == convertEmptyColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertColor);
+                            ellipse.Stroke = new SolidColorBrush(convertStrokeColor);
                             countColored += 1;
                             coloredCircle.Add(ellipse.Name);
                             notColoredCircle.Remove(ellipse.Name);
@@ -106,6 +109,7 @@ namespace WPF_FirstProject
                         else if(brush.Color == convertColor)
                         {
                             ellipse.Fill = new SolidColorBrush(convertEmptyColor);
+                            ellipse.Stroke = new SolidColorBrush(convertStrokeColor);
                             countColored -= 1;
                             coloredCircle.Remove(ellipse.Name);
 
@@ -162,7 +166,10 @@ namespace WPF_FirstProject
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            string chosenStroke = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             var resetColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+            var resetStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStroke);
+
 
             coloredCircle.Clear();
             notColoredCircle.Clear();
@@ -176,6 +183,7 @@ namespace WPF_FirstProject
                 notColoredCircle.Add(ellipse.Name);
 
                 ellipse.Fill = new SolidColorBrush(resetColor);
+                ellipse.Stroke = new SolidColorBrush(resetStrokeColor);
 
                 //ellipse.Fill = new SolidColorBrush(Colors.AliceBlue);
             }
@@ -192,7 +200,9 @@ namespace WPF_FirstProject
         private void btnApply(object sender, RoutedEventArgs e)
         {
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            string chosenStrokeColor = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             var convertEmptyWells = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
+            var convertStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStrokeColor);
 
             float spacePerCircle = 0;
             string selectItem = "";
@@ -265,6 +275,8 @@ namespace WPF_FirstProject
                         Ellipse ellipse = new Ellipse();
 
                         ellipse.Fill = new SolidColorBrush(convertEmptyWells);
+                        ellipse.Stroke = new SolidColorBrush(convertStrokeColor);
+                        ellipse.StrokeThickness = 6;
                         ellipse.Height = EllipseSize;
                         ellipse.Width = EllipseSize;
                         //Debug.WriteLine($"n{alphabet[h]}_{myWidth - w - 1}");
