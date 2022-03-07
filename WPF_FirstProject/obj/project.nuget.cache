@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vnbyVGr1tQJNDI3AWiZfyE8MUNlxj3Js0/r3mmqm9nB2YktUdnJvxcVq1ZkcPTdNTvOgDUUzZYCQLurdJLErvg==",
+  "dgSpecHash": "EhuDzpWy7nZD1CTkWzDfC3UFioanYGa9awTKtsNtxXzOGeKvB3WCSd9D6B3Xgb55WbEu4H87Cmg7RVkCntaLGA==",
   "success": true,
   "projectFilePath": "C:\\Users\\jarmo\\Documents\\School\\Softwaredeveloper\\Leerjaar 2\\Stage\\Applicaties\\WellplateApplication\\WPF_FirstProject\\WPF_FirstProject.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jarmo\\.nuget\\packages\\colorhelper\\1.6.2\\colorhelper.1.6.2.nupkg.sha512"
+  ],
   "logs": []
 }

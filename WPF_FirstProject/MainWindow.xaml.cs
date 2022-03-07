@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HelpThisColor = ColorHelper;
 
 namespace WPF_FirstProject
 {
@@ -484,31 +485,50 @@ namespace WPF_FirstProject
 
         private void AddColor(object sender, RoutedEventArgs e)
         {
-            int red;
-            int green;
-            int blue;
-            string hexColor;
-            string testFormat;
+            string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            //int red;
+            //int green;
+            //int blue;
+            //string hexColor;
+            //string testFormat;
             string newColor = txbAddColor.Text.Trim();
             
             if (newColor.Contains(","))
             {
-                string[] splitNewColor = newColor.Split(",");
-                red = int.Parse(splitNewColor[0].Trim());
-                green = int.Parse(splitNewColor[1].Trim());
-                blue = int.Parse(splitNewColor[2].Trim());
+                //string[] splitNewColor = newColor.Split(",");
+                //red = int.Parse(splitNewColor[0].Trim());
+                //green = int.Parse(splitNewColor[1].Trim());
+                //blue = int.Parse(splitNewColor[2].Trim());
 
-                testFormat = $"{red:X2}{green:X2}{blue:X2}";
+                //HelpThisColor.RGB rgb = new HelpThisColor.RGB(Convert.ToByte(red), Convert.ToByte(green), Convert.ToByte(blue));
+                //HelpThisColor.HEX hex = HelpThisColor.ColorConverter.RgbToHex(rgb);
 
-                Debug.WriteLine($"Testformat: {testFormat}");
-                Debug.WriteLine($"{red}\r\n{green}\r\n{blue}");
+                //Debug.WriteLine(hex);
+
+                //newColor = hex.ToString();
+
+                ////Debug.WriteLine($"Testformat: {testFormat}");
+                //Debug.WriteLine($"{red}\r\n{green}\r\n{blue}");
+                MessageBox.Show("RGB is not allowed in this version");
             }
 
             if (cbChooseEmptyColor.Items.Contains(newColor) == false)
             {
-                cbChooseColor.Items.Add(newColor);
-                cbChooseEmptyColor.Items.Add(newColor);
-                cbChooseStroke.Items.Add(newColor);
+                try
+                {
+                    var convertColor = (Color)ColorConverter.ConvertFromString(newColor);
+                    cbChooseColor.Items.Add(newColor);
+                    cbChooseEmptyColor.Items.Add(newColor);
+                    cbChooseStroke.Items.Add(newColor);
+                    txbAddColor.Text = "";
+                }
+                catch (Exception E)
+                {
+                    MessageBox.Show("Something went wrong:\r\n" + E.ToString());
+                }
+
+
+                
                 
             }
             
