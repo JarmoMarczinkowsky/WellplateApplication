@@ -59,6 +59,14 @@
                 <RotateTransform Angle="0"/>
             </Grid.RenderTransform>
         </Grid>
+
+        <Label Content="Circle size" x:Name="lblCircleSize" FontSize="20" HorizontalAlignment="Right" Margin="0,451,330,0" VerticalAlignment="Top" Width="200" Height="1220" />
+        <Slider Name="slCircleSize" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Minimum="1" Maximum="10" HorizontalAlignment="Right" Margin="975,450,10,0" VerticalAlignment="Top" Width="95" Height="120">
+            <Slider.LayoutTransform>
+                <ScaleTransform ScaleY="2" ScaleX="2"/>
+            </Slider.LayoutTransform>
+        </Slider>
+        
         <Label x:Name="lblUncoloredList" FontSize="20" Content="Niet gekleurde hokjes: " HorizontalAlignment="Left" Margin="0,0,0,22" VerticalAlignment="Bottom"/>
 
         <Label x:Name="lblUncolored" FontSize="20" Content="Grootte" HorizontalAlignment="Left" Margin="0,602,0,0" VerticalAlignment="Bottom"/>

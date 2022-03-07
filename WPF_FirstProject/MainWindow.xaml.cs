@@ -230,6 +230,8 @@ namespace WPF_FirstProject
             string chosenStrokeColor = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             var convertEmptyWells = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
             var convertStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStrokeColor);
+            double sliderValue = slCircleSize.Value;
+            float alphabeticLabelDistance = 0;
 
             //reset the coordinates of the plate
             coloredCircle.Clear();
@@ -272,7 +274,28 @@ namespace WPF_FirstProject
             myLength = int.Parse(myArray[0].Trim());
             myWidth = int.Parse(myArray[1].Trim());
 
-           //calculates the size
+            if (myWidth * myLength >= 300)
+            {
+                alphabeticLabelDistance = -300;
+            }
+            else if (myWidth * myLength >= 200 && myWidth * myLength < 300)
+            {
+                alphabeticLabelDistance = -383;
+            }
+            else if(myWidth * myLength >= 100 && myWidth * myLength < 200)
+            {
+                alphabeticLabelDistance = -466;
+            }
+            else if(myWidth * myLength < 100 && myWidth * myLength >= 50)
+            {
+                alphabeticLabelDistance = -500;
+            }
+            else if (myWidth * myLength < 50 && myWidth * myLength >= 1)
+            {
+                alphabeticLabelDistance = -500;
+            }
+
+            //calculates the size
             if (myLength < 27 && myWidth < 27)
             {
                 float totalSizeField = 600;
@@ -287,7 +310,7 @@ namespace WPF_FirstProject
                     spacePerCircle = (float)(totalSizeField / myLength);
                 }
 
-                float EllipseSize = spacePerCircle / EllipseDistance;
+                float EllipseSize = spacePerCircle / EllipseDistance * (float)(sliderValue / 100 * 4 + 1);
                
 
                 //int EllipseSize = 140;
@@ -323,7 +346,7 @@ namespace WPF_FirstProject
                             notColoredCircle.Add(ellipse.Name);
                         }
 
-                        ellipse.Margin = new Thickness(200, h * (EllipseSize * EllipseDistance), w * (EllipseSize * EllipseDistance), 200);
+                        ellipse.Margin = new Thickness(200, -300 + h * (EllipseSize * EllipseDistance), w * (EllipseSize * EllipseDistance), 200);
 
                         gMyGrid.Children.Add(ellipse);
 
@@ -339,7 +362,7 @@ namespace WPF_FirstProject
                             //lblCoordinateNum.Background = Brushes.Red;
                             lblCoordinateNum.Content = myWidth - w - 1;
 
-                            lblCoordinateNum.Margin = new Thickness(0, -250, -205 + (w * EllipseSize * EllipseDistance) + 3, 0);
+                            lblCoordinateNum.Margin = new Thickness(0, -550, -205 + (w * EllipseSize * EllipseDistance) + 3, 0);
                             lblCoordinateNum.Foreground = Brushes.Black;
 
                             
@@ -368,7 +391,7 @@ namespace WPF_FirstProject
                             //lblCoordinateAlphabet.Content = alphabet[countAlphabet2].ToString() + alphabet[countAlphabet].ToString();
                             lblCoordinateAlphabet.Content = alphabet[h].ToString();
                             //lblCoordinateAlphabet.Background = Brushes.Aquamarine;
-                            lblCoordinateAlphabet.Margin = new Thickness(0, -202 + (h * EllipseSize * EllipseDistance), -400, 0);
+                            lblCoordinateAlphabet.Margin = new Thickness(0, -500 + (h * EllipseSize * EllipseDistance), alphabeticLabelDistance, 0);
                             lblCoordinateAlphabet.Foreground = Brushes.Black;
 
                             gLabelTest.Children.Add(lblCoordinateAlphabet);
@@ -383,7 +406,7 @@ namespace WPF_FirstProject
 
 
                 txbSize.Text = "";
-                Debug.WriteLine($"Ellipse height: {EllipseSize}");
+                //Debug.WriteLine($"Ellipse height: {EllipseSize}");
 
 
             }
@@ -486,33 +509,31 @@ namespace WPF_FirstProject
         private void AddColor(object sender, RoutedEventArgs e)
         {
             string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-            //int red;
-            //int green;
-            //int blue;
-            //string hexColor;
-            //string testFormat;
+            int red;
+            int green;
+            int blue;
             string newColor = txbAddColor.Text.Trim();
             
             if (newColor.Contains(","))
             {
-                //string[] splitNewColor = newColor.Split(",");
-                //red = int.Parse(splitNewColor[0].Trim());
-                //green = int.Parse(splitNewColor[1].Trim());
-                //blue = int.Parse(splitNewColor[2].Trim());
+                string[] splitNewColor = newColor.Split(",");
+                red = int.Parse(splitNewColor[0].Trim());
+                green = int.Parse(splitNewColor[1].Trim());
+                blue = int.Parse(splitNewColor[2].Trim());
 
-                //HelpThisColor.RGB rgb = new HelpThisColor.RGB(Convert.ToByte(red), Convert.ToByte(green), Convert.ToByte(blue));
-                //HelpThisColor.HEX hex = HelpThisColor.ColorConverter.RgbToHex(rgb);
+                HelpThisColor.RGB rgb = new HelpThisColor.RGB(Convert.ToByte(red), Convert.ToByte(green), Convert.ToByte(blue));
+                HelpThisColor.HEX hex = HelpThisColor.ColorConverter.RgbToHex(rgb);
 
-                //Debug.WriteLine(hex);
+                Debug.WriteLine($"Hex: {hex}");
 
-                //newColor = hex.ToString();
+                newColor = "#" + hex.ToString();
 
                 ////Debug.WriteLine($"Testformat: {testFormat}");
                 //Debug.WriteLine($"{red}\r\n{green}\r\n{blue}");
                 MessageBox.Show("RGB is not allowed in this version");
             }
 
-            if (cbChooseEmptyColor.Items.Contains(newColor) == false)
+            if (cbChooseEmptyColor.Items.Contains(newColor) == false && newColor.Contains("#") || char.IsLetter(newColor.FirstOrDefault()))
             {
                 try
                 {
