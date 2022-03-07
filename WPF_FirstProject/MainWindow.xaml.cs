@@ -27,24 +27,49 @@ namespace WPF_FirstProject
         public MainWindow()
         {
             InitializeComponent();
+
+            string[] colors = { "Blue", "Black", "Red", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            foreach (var color in colors)
+            {
+                if (cbChooseColor.Items.Contains(color) == false)
+                {
+                    cbChooseColor.Items.Add(color);
+                }
+
+                if (cbChooseEmptyColor.Items.Contains(color) == false)
+                {
+                    cbChooseEmptyColor.Items.Add(color);
+                }
+
+                if (cbChooseStroke.Items.Contains(color) == false)
+                {
+                    cbChooseStroke.Items.Add(color);
+                }
+            }
+
+            cbChooseEmptyColor.SelectedItem = cbChooseEmptyColor.Items[1];
+            cbChooseColor.SelectedItem = cbChooseColor.Items[2];
+            cbChooseStroke.SelectedItem = cbChooseStroke.Items[1];
+
             //Generates array of strings, sorts them and aadds them to the 'empty wells' combobox
-            string[] emptyWellColors = { "Blue", "Red", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
-            Array.Sort(emptyWellColors, StringComparer.InvariantCulture);
+            //string[] emptyWellColors = { "Blue", "Red", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            //Array.Sort(emptyWellColors, StringComparer.InvariantCulture);
 
-            foreach (var emptyColor in emptyWellColors)
-            {
-                cbChooseEmptyColor.Items.Add(emptyColor);
-            }
+            //foreach (var emptyColor in emptyWellColors)
+            //{
+            //    cbChooseEmptyColor.Items.Add(emptyColor);
+            //    cbChooseStroke.Items.Add(emptyColor);
+            //}
 
-            //Generates array of strings, sorts them and adds them to the 'chosen wells' combobox
-            string[] chosenWellColors = { "Blue", "Black", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
-            Array.Sort(chosenWellColors, StringComparer.InvariantCulture);
+            ////Generates array of strings, sorts them and adds them to the 'chosen wells' combobox
+            //string[] chosenWellColors = { "Blue", "Black", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
+            //Array.Sort(chosenWellColors, StringComparer.InvariantCulture);
 
-            foreach (var myColor in chosenWellColors)
-            {
-                cbChooseColor.Items.Add(myColor);
-                cbChooseStroke.Items.Add(myColor);
-            }
+            //foreach (var myColor in chosenWellColors)
+            //{
+            //    cbChooseColor.Items.Add(myColor);
+                
+            //}
 
             
 
@@ -130,7 +155,7 @@ namespace WPF_FirstProject
 
             lblUncolored.Content = "";
 
-            Debug.WriteLine(spamCounter);
+            //Debug.WriteLine(spamCounter);
             //lblUncoloredList.Content = "Colored circles\r\n";
             lblUncolored.Content = $"Gekleurde hokjes: {countColored}\t";
             
@@ -174,6 +199,7 @@ namespace WPF_FirstProject
             coloredCircle.Clear();
             notColoredCircle.Clear();
             lblUncoloredList.Content = "";
+            lblUncolored.Content = "";
 
             
             foreach (object child in gMyGrid.Children)
@@ -191,7 +217,7 @@ namespace WPF_FirstProject
             txbBlockTester.Text = "";
 
             countColored = 0;
-            //Debug.WriteLine(countColored);
+            
 
 
             
@@ -204,12 +230,19 @@ namespace WPF_FirstProject
             var convertEmptyWells = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
             var convertStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStrokeColor);
 
+            //reset the coordinates of the plate
+            coloredCircle.Clear();
+            notColoredCircle.Clear();
+            lblUncoloredList.Content = "";
+            lblUncolored.Content = "";
+            txbBlockTester.Text = "";
+            countColored = 0;
+
+            //create more variables
             float spacePerCircle = 0;
-            string selectItem = "";
-            string selectItemFormat = "";
+            string selectItem = ""; //
+            string selectItemFormat = ""; //later used to replace the text in a string, so that the formatting is correct.
             string[] myArray = new string[0];
-            //int myLength;
-            //int myWidth;
             int ellipseCounter = 0;
 
             gMyGrid.Children.Clear();
@@ -224,7 +257,7 @@ namespace WPF_FirstProject
             }
             else
             {
-                selectItem = cbBox.SelectedItem.ToString();
+                selectItem = cbSize.SelectedItem.ToString();
 
                 selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             }
@@ -233,7 +266,7 @@ namespace WPF_FirstProject
 
             lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
-            //Debug.WriteLine($"-_{selectItemFormat}_-");
+           
             myArray = selectItemFormat.Split("x");
             myLength = int.Parse(myArray[0].Trim());
             myWidth = int.Parse(myArray[1].Trim());
@@ -254,7 +287,7 @@ namespace WPF_FirstProject
                 }
 
                 float EllipseSize = spacePerCircle / EllipseDistance;
-                //Debug.WriteLine(myLength * EllipseDistance * EllipseSize);
+               
 
                 //int EllipseSize = 140;
 
@@ -276,12 +309,12 @@ namespace WPF_FirstProject
 
                         ellipse.Fill = new SolidColorBrush(convertEmptyWells);
                         ellipse.Stroke = new SolidColorBrush(convertStrokeColor);
-                        ellipse.StrokeThickness = 6;
+                        ellipse.StrokeThickness = EllipseSize * 0.08F;
                         ellipse.Height = EllipseSize;
                         ellipse.Width = EllipseSize;
-                        //Debug.WriteLine($"n{alphabet[h]}_{myWidth - w - 1}");
+                        
                         ellipse.Name = $"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}";
-                        //Debug.WriteLine($"|||{ellipse.Name}|||");
+                        
                         myCoordinates.Add($"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}");
                         
                         if (notColoredCircle.Contains(ellipse.Name) == false)
@@ -289,10 +322,11 @@ namespace WPF_FirstProject
                             notColoredCircle.Add(ellipse.Name);
                         }
 
-                        ellipse.Margin = new Thickness(200, (h * (EllipseSize * EllipseDistance)), w * (EllipseSize * EllipseDistance), 200);
+                        ellipse.Margin = new Thickness(200, h * (EllipseSize * EllipseDistance), w * (EllipseSize * EllipseDistance), 200);
 
                         gMyGrid.Children.Add(ellipse);
 
+                        
 
                         //numeric labels
                         if (h == 0)
@@ -346,14 +380,10 @@ namespace WPF_FirstProject
                     //gMyGrid.RenderTransform
                 }
 
-                //Debug.WriteLine($"TC: {totalCircles}");
+
                 txbSize.Text = "";
-                //Debug.WriteLine(myCoordinates);
-                //foreach (string coordinate in myCoordinates)
-                //{
-                //    Debug.WriteLine($"||{coordinate}||");
-                //}
-                
+                Debug.WriteLine($"Ellipse height: {EllipseSize}");
+
 
             }
             else
@@ -372,7 +402,7 @@ namespace WPF_FirstProject
             {
                 if (txbSize.Text.Contains("x"))
                 {
-                    cbBox.Items.Add(txbSize.Text);
+                    cbSize.Items.Add(txbSize.Text);
                     txbSize.Text = "";
                 }
 
@@ -386,6 +416,7 @@ namespace WPF_FirstProject
 
         private void ViewCoordinate(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine($"Test:{txbCoordinatePicker.Text}||");
             if (txbCoordinatePicker.Text != "")
             {
                 int numberInTxb = int.Parse(txbCoordinatePicker.Text);
@@ -394,7 +425,7 @@ namespace WPF_FirstProject
                 {
                     if (coordinate.Contains(txbCoordinatePicker.Text))
                     {
-                        //Debug.WriteLine(coordinate);
+                        
                         string[] splitCoordinate = coordinate.Replace("n", "").Split("_");
                         if (splitCoordinate[2] == txbCoordinatePicker.Text.Trim())
                         {
@@ -448,6 +479,38 @@ namespace WPF_FirstProject
 
             
 
+            
+        }
+
+        private void AddColor(object sender, RoutedEventArgs e)
+        {
+            int red;
+            int green;
+            int blue;
+            string hexColor;
+            string testFormat;
+            string newColor = txbAddColor.Text.Trim();
+            
+            if (newColor.Contains(","))
+            {
+                string[] splitNewColor = newColor.Split(",");
+                red = int.Parse(splitNewColor[0].Trim());
+                green = int.Parse(splitNewColor[1].Trim());
+                blue = int.Parse(splitNewColor[2].Trim());
+
+                testFormat = $"{red:X2}{green:X2}{blue:X2}";
+
+                Debug.WriteLine($"Testformat: {testFormat}");
+                Debug.WriteLine($"{red}\r\n{green}\r\n{blue}");
+            }
+
+            if (cbChooseEmptyColor.Items.Contains(newColor) == false)
+            {
+                cbChooseColor.Items.Add(newColor);
+                cbChooseEmptyColor.Items.Add(newColor);
+                cbChooseStroke.Items.Add(newColor);
+                
+            }
             
         }
     }

@@ -20,17 +20,17 @@
 
             <Label Content="Empty wells color" HorizontalAlignment="Left" Margin="700,60,0,0" FontSize="20" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseEmptyColor" Margin="951,60,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
-                <ComboBoxItem IsSelected="True">Black</ComboBoxItem>
+                <!--<ComboBoxItem IsSelected="True">Black</ComboBoxItem>-->
             </ComboBox>
             
             <Label Content="Chosen wells color" HorizontalAlignment="Left" Margin="700,120,0,0" FontSize="20" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseColor" Margin="951,120,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
-                <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
+                <!--<ComboBoxItem IsSelected="True">Red</ComboBoxItem>-->
             </ComboBox>
 
             <Label Content="Add width x height " HorizontalAlignment="Left" Margin="700,180,0,0" FontSize="20" VerticalAlignment="Top"/>
             <TextBox x:Name="txbSize"  HorizontalAlignment="Left" Margin="900,181,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="37" FontSize="25"/>
-            <ComboBox x:Name="cbBox" HorizontalAlignment="Right" Margin="890,181,0,0" VerticalAlignment="Top" Width="200" Height="40" FontSize="20">
+            <ComboBox x:Name="cbSize" HorizontalAlignment="Right" Margin="890,181,0,0" VerticalAlignment="Top" Width="200" Height="40" FontSize="20">
                 <ComboBoxItem IsSelected="True">4 x 6</ComboBoxItem>
                 <ComboBoxItem>6 x 8</ComboBoxItem>
                 <ComboBoxItem>8 x 12</ComboBoxItem>
@@ -39,34 +39,39 @@
 
             <Label Content="Add stroke color" HorizontalAlignment="Left" Margin="700,240,0,0" FontSize="20" VerticalAlignment="Top"/>
             <ComboBox HorizontalAlignment="Right" x:Name="cbChooseStroke" Margin="951,240,0,0" VerticalAlignment="Top" FontSize="20"  Width="200" Height="40">
-                <ComboBoxItem IsSelected="True">Red</ComboBoxItem>
+                <!--<ComboBoxItem IsSelected="True">Black</ComboBoxItem>-->
             </ComboBox>
 
 
             <TextBox HorizontalAlignment="Right" x:Name="txbCoordinatePicker" Margin="1031,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
             <Button HorizontalAlignment="Left" x:Name="btnCoordinatePicker" Click="ViewCoordinate" Content="number to coordinate" VerticalAlignment="Top" Margin="700, 300,0,0"  FontSize="20" Width="200" Height="40"/>
             
-            <TextBox HorizontalAlignment="Right" x:Name="txbColorCreator" Margin="1031,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
-            <Button HorizontalAlignment="Left" x:Name="btnColorCreator" Click="CoordinateToColor" Content="coordinate to color" VerticalAlignment="Top" Margin="700, 300,0,0"  FontSize="20" Width="200" Height="40"/>
+            <TextBox HorizontalAlignment="Right" x:Name="txbColorCreator" Margin="1031,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
+            <Button HorizontalAlignment="Left" x:Name="btnColorCreator" Click="CoordinateToColor" Content="coordinate to color" VerticalAlignment="Top" Margin="700,350,0,0"  FontSize="20" Width="200" Height="40"/>
+
+            <TextBox HorizontalAlignment="Right" x:Name="txbAddColor" Margin="1031,400,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="30" Width="200" Height="40"/>
+            <Button HorizontalAlignment="Left" x:Name="btnAddColor" Margin="700,400,0,0" Click="AddColor" Content="Add color" VerticalAlignment="Top" FontSize="20" Width="200" Height="40"/>
 
         </Grid>
-        <CheckBox Content="Rotate" x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" Margin="0,470,30, 0" VerticalAlignment="Top"/>
 
         <Grid PreviewMouseDown="Grid_PreviewMouseDown" x:Name="gMyGrid">
             <Grid.RenderTransform>
                 <RotateTransform Angle="0"/>
             </Grid.RenderTransform>
         </Grid>
-        <Label x:Name="lblUncoloredList" FontSize="20" Content="a" HorizontalAlignment="Left" Margin="0,0,0,22" VerticalAlignment="Bottom"/>
+        <Label x:Name="lblUncoloredList" FontSize="20" Content="Niet gekleurde hokjes: " HorizontalAlignment="Left" Margin="0,0,0,22" VerticalAlignment="Bottom"/>
 
         <Label x:Name="lblUncolored" FontSize="20" Content="Grootte" HorizontalAlignment="Left" Margin="0,602,0,0" VerticalAlignment="Bottom"/>
 
 
-        <Label x:Name="lblDebugLabel" Content="Grootte" HorizontalAlignment="Right" Margin="784,602,0,0" VerticalAlignment="Bottom"/>
-        <Button Content="Reset kleur" HorizontalAlignment="Right" Margin="0,615,0,0" VerticalAlignment="Top" Click="Button_Click" Height="81" Width="252" FontSize="24"/>
-        <Button Content="Toepassen" HorizontalAlignment="Right" Margin="0,529,0,0" VerticalAlignment="Top" Click="btnApply" Height="81" Width="252" FontSize="30"/>
+        <CheckBox x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,200" VerticalContentAlignment="Center">
+            <TextBlock Text="Rotate" VerticalAlignment="Center"/>
+        </CheckBox>
+        <Button Content="Reset kleur" HorizontalAlignment="Right" Margin="0,0,0,30" VerticalAlignment="Bottom" Click="Button_Click" Height="81" Width="252" FontSize="24"/>
+        <Button Content="Toepassen" HorizontalAlignment="Right" Margin="0,0,0,115" VerticalAlignment="Bottom" Click="btnApply" Height="81" Width="252" FontSize="30"/>
         <!--<Button Content="Voeg waarde toe" HorizontalAlignment="Right" Margin="0,443,0,0" VerticalAlignment="Top" Click="addValue" Height="81" Width="252" FontSize="30"/>-->
         <TextBlock HorizontalAlignment="Left" x:Name="txbBlockTester" FontSize="25" Margin="10,10,0,0" Text="Test in progress..." TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="lblDebugLabel" Content="Grootte" HorizontalAlignment="Right" Margin="784,602,0,0" VerticalAlignment="Bottom"/>
     </Grid>
 
 
