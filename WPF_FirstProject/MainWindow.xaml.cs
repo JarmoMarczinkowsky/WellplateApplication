@@ -29,7 +29,7 @@ namespace WPF_FirstProject
         //private ervoor zetten
         //underscore voor
         int countColored;
-        int myLength;
+        int myHeight;
         int myWidth;
         List<string> myCoordinates = new List<string>();
         List<string> coloredCircle = new List<string>();
@@ -66,9 +66,9 @@ namespace WPF_FirstProject
                 }
             }
 
-            cbChooseEmptyColor.SelectedItem = cbChooseEmptyColor.Items[1];
-            cbChooseColor.SelectedItem = cbChooseColor.Items[2];
-            cbChooseStroke.SelectedItem = cbChooseStroke.Items[1];
+            cbChooseEmptyColor.SelectedItem = cbChooseEmptyColor.Items[2];
+            cbChooseColor.SelectedItem = cbChooseColor.Items[8];
+            cbChooseStroke.SelectedItem = cbChooseStroke.Items[2];
 
             txbBlockTester.Text = "";
 
@@ -153,7 +153,7 @@ namespace WPF_FirstProject
 
             notColoredCircle.Sort();
             lblUncoloredList.Content = "";
-            lblUncoloredList.Content = $"\r\nNiet gekleurde hokjes: {(myLength * myWidth) - countColored}\t";
+            lblUncoloredList.Content = $"\r\nNiet gekleurde hokjes: {(myHeight * myWidth) - countColored}\t";
 
             foreach (string circleWithoutColor in notColoredCircle)
             {
@@ -243,12 +243,14 @@ namespace WPF_FirstProject
 
             lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
-            lengthAndWidth = selectItemFormat.Split("x").ToList();
-            myLength = int.Parse(lengthAndWidth[0].Trim()); //replace met replace
-            myWidth = int.Parse(lengthAndWidth[1].Trim());
+            lengthAndWidth = selectItemFormat.Replace(" ", "").Split("x").ToList();
+            myHeight = int.Parse(lengthAndWidth[0]); //replace met replace
+            myWidth = int.Parse(lengthAndWidth[1]);
 
-            
-            totalCircles = myWidth * myLength;
+            //default 4x6
+            //verticaal: 4 (0) myHeight
+            //horizontaal: 6 (1) myWidth
+            totalCircles = myWidth * myHeight;
 
             //switch (totalCircles)
             //{
@@ -267,11 +269,11 @@ namespace WPF_FirstProject
             {
                 alphabeticLabelDistance = -383;
             }
-            else if(totalCircles >= 100 && totalCircles < 200)
+            else if (totalCircles >= 100 && totalCircles < 200)
             {
                 alphabeticLabelDistance = -466;
             }
-            else if(totalCircles < 100 && totalCircles >= 50)
+            else if (totalCircles < 100 && totalCircles >= 50)
             {
                 alphabeticLabelDistance = -500;
             }
@@ -279,22 +281,41 @@ namespace WPF_FirstProject
             {
                 alphabeticLabelDistance = -550;
             }
+            
+
 
 
             //calculates the size
-            if (myLength < 27 && myWidth < 27)
+            if (myHeight < 27 && myWidth < 27)
             {
                 float totalSizeField = 600;
                 float EllipseDistance = 2F; //(float)(60.0 / EllipseSize)
 
-                if (myWidth > 1)
+                if (myHeight < myWidth && myHeight < 11)
                 {
-                    spacePerCircle = totalSizeField / (myLength - 1);
+                    totalSizeField = 840;
+                    if (myWidth > 1)
+                    {
+                        spacePerCircle = totalSizeField / (myWidth - 1);
+                    }
+                    else if (myWidth == 1)
+                    {
+                        spacePerCircle = (float)(totalSizeField / myWidth);
+                    }
                 }
-                else if (myWidth == 1)
+                else
                 {
-                    spacePerCircle = (float)(totalSizeField / myLength);
+                    if (myHeight > 1)
+                    {
+                        spacePerCircle = totalSizeField / (myHeight - 1);
+                    }
+                    else if (myHeight == 1)
+                    {
+                        spacePerCircle = (float)(totalSizeField / myHeight);
+                    }
                 }
+
+                
 
                 float EllipseSize = spacePerCircle / EllipseDistance * (float)(sliderValue / 100 * 4 + 1);
                
@@ -305,7 +326,7 @@ namespace WPF_FirstProject
 
                 //generates rows and colums of circles
 
-                for (int h = 0; h < myLength; h++) //height
+                for (int h = 0; h < myHeight; h++) //height
                 {
 
                     for (int w = 0; w < myWidth; w++) //width
