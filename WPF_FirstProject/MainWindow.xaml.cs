@@ -213,6 +213,7 @@ namespace WPF_FirstProject
             lblUncolored.Content = "";
             txbBlockTester.Text = "";
             countColored = 0;
+            myCoordinates.Clear();
 
             //create more variables
             float spacePerCircle = 0; //replace met double
