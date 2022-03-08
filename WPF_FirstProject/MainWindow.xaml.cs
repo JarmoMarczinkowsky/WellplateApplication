@@ -24,11 +24,27 @@ namespace WPF_FirstProject
     public partial class MainWindow : Window
     {
 
+        List<string> lengthAndWidth = new List<string>();
+        //boven constructor declareren
+        //private ervoor zetten
+        //underscore voor
+        int countColored;
+        int myLength;
+        int myWidth;
+        List<string> myCoordinates = new List<string>();
+        List<string> coloredCircle = new List<string>();
+        List<string> notColoredCircle = new List<string>();
+        bool squareChecked;
+        int totalCircles;
 
         public MainWindow()
         {
             InitializeComponent();
 
+             
+            //list maken ipv string array
+            //alfabetisch maken
+            //
             string[] colors = { "Blue", "Black", "Red", "Green", "Brown", "Gray", "Pink", "Yellow", "Beige", "Aqua" };
             foreach (var color in colors)
             {
@@ -58,7 +74,7 @@ namespace WPF_FirstProject
 
             //foreach (var emptyColor in emptyWellColors)
             //{
-            //    cbChooseEmptyColor.Items.Add(emptyColor);
+            //    cbChooseEmptyColor.Items.Source(emptyWellColors);
             //    cbChooseStroke.Items.Add(emptyColor);
             //}
 
@@ -78,47 +94,37 @@ namespace WPF_FirstProject
 
         }
 
-        int countColored;
-        int myLength;
-        int myWidth;
-        List<string> myCoordinates = new List<string>();
-        List<string> coloredCircle = new List<string>();
-        List<string> notColoredCircle = new List<string>(); 
-
+        
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
 
             string formatColorCircle = "";
             string formatNotColorCircle = "";
             //this takes care of the colors of the circles.
-
-            string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-            string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-            string chosenStrokeColor = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
-
+            //magic numbers in variabeles
+            string chosenColor = cbChooseColor.SelectedItem as string;
+            string emptyWellsColor = cbChooseEmptyColor.SelectedItem as string;
+            string chosenStrokeColor = cbChooseStroke.SelectedItem as string;
+            //
             var convertColor = (Color)ColorConverter.ConvertFromString(chosenColor);
             var convertEmptyColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
             var convertStrokeColor = (Color)ColorConverter.ConvertFromString(chosenStrokeColor);
 
-            int spamCounter = 0;
-
-            //notColoredCircle.Clear();
-
+            
             foreach (object child in gMyGrid.Children)
             {
-                Ellipse ellipse = child as Ellipse;
+                Rectangle ellipse = child as Rectangle;
 
-                spamCounter += 1;
-                
-                
-                if (((Ellipse)child).IsMouseOver)
+               
+                if (((Rectangle)child).IsMouseOver)
                 {
            
                     SolidColorBrush brush = ellipse.Fill as SolidColorBrush;
                     if (brush != null)
                     {
-                        string cleanCoordinate = ellipse.Name.Replace("n", "");
-                        string[] sepCoorFromNumber = cleanCoordinate.Split("_");
+                        //duidelijkere naam geven
+                        string removeNFromCoordinate = ellipse.Name.Replace("n", "");
+                        string[] sepCoorFromNumber = removeNFromCoordinate.Split("_");
                         
                         
                         txbBlockTester.Text = $"{sepCoorFromNumber[0]}:{sepCoorFromNumber[1]}\t nr. {sepCoorFromNumber[2]}"; 
@@ -156,8 +162,8 @@ namespace WPF_FirstProject
 
             lblUncolored.Content = "";
 
-            //Debug.WriteLine(spamCounter);
             //lblUncoloredList.Content = "Colored circles\r\n";
+            //environment.newline;
             lblUncolored.Content = $"Gekleurde hokjes: {countColored}\t";
             
             foreach (string myColoredCircle in coloredCircle)
@@ -191,6 +197,7 @@ namespace WPF_FirstProject
         //this is the function to reset the colors in the circles
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //as string
             string emptyWellsColor = cbChooseEmptyColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             string chosenStroke = cbChooseStroke.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
             var resetColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
@@ -205,7 +212,7 @@ namespace WPF_FirstProject
             
             foreach (object child in gMyGrid.Children)
             {
-                Ellipse ellipse = child as Ellipse;
+                Rectangle ellipse = child as Rectangle;
 
                 notColoredCircle.Add(ellipse.Name);
 
@@ -242,10 +249,11 @@ namespace WPF_FirstProject
             countColored = 0;
 
             //create more variables
-            float spacePerCircle = 0;
+            float spacePerCircle = 0; //replace met double
             string selectItem = ""; //
             string selectItemFormat = ""; //later used to replace the text in a string, so that the formatting is correct.
-            string[] myArray = new string[0];
+            
+            
             int ellipseCounter = 0;
 
             gMyGrid.Children.Clear();
@@ -262,7 +270,7 @@ namespace WPF_FirstProject
             {
                 selectItem = cbSize.SelectedItem.ToString();
 
-                selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+                selectItemFormat = selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");//selectItem.Replace("System.Windows.Controls.ComboBoxItem: ", "");
             }
 
             //gMyGrid.RenderTransform = 90;
@@ -270,30 +278,44 @@ namespace WPF_FirstProject
             lblDebugLabel.Content = $"Grootte: {selectItemFormat}";
 
            
-            myArray = selectItemFormat.Split("x");
-            myLength = int.Parse(myArray[0].Trim());
-            myWidth = int.Parse(myArray[1].Trim());
+            lengthAndWidth = selectItemFormat.Split("x").ToList();
+            myLength = int.Parse(lengthAndWidth[0].Trim()); //replace met replace
+            myWidth = int.Parse(lengthAndWidth[1].Trim());
 
-            if (myWidth * myLength >= 300)
+            //switch
+
+            totalCircles = myWidth * myLength;
+
+            switch (totalCircles)
+            {
+                case var expression when totalCircles >= 300:
+                    alphabeticLabelDistance = -300;
+                    break;
+                default:
+                    break;
+            }
+
+            if (totalCircles >= 300)
             {
                 alphabeticLabelDistance = -300;
             }
-            else if (myWidth * myLength >= 200 && myWidth * myLength < 300)
+            else if (totalCircles >= 200 && totalCircles < 300)
             {
                 alphabeticLabelDistance = -383;
             }
-            else if(myWidth * myLength >= 100 && myWidth * myLength < 200)
+            else if(totalCircles >= 100 && totalCircles < 200)
             {
                 alphabeticLabelDistance = -466;
             }
-            else if(myWidth * myLength < 100 && myWidth * myLength >= 50)
+            else if(totalCircles < 100 && totalCircles >= 50)
             {
                 alphabeticLabelDistance = -500;
             }
-            else if (myWidth * myLength < 50 && myWidth * myLength >= 1)
+            else if (totalCircles < 50 && totalCircles >= 1)
             {
-                alphabeticLabelDistance = -500;
+                alphabeticLabelDistance = -550;
             }
+
 
             //calculates the size
             if (myLength < 27 && myWidth < 27)
@@ -322,21 +344,31 @@ namespace WPF_FirstProject
 
                 //generates rows and colums of circles
 
-                for (int h = 0; h < myLength; h++)
+                for (int h = 0; h < myLength; h++) //height
                 {
 
-                    for (int w = 0; w < myWidth; w++)
+                    for (int w = 0; w < myWidth; w++) //width
                     {
                         
 
-                        Ellipse ellipse = new Ellipse();
+                        Rectangle ellipse = new Rectangle();
 
                         ellipse.Fill = new SolidColorBrush(convertEmptyWells);
                         ellipse.Stroke = new SolidColorBrush(convertStrokeColor);
                         ellipse.StrokeThickness = EllipseSize * 0.08F;
                         ellipse.Height = EllipseSize;
                         ellipse.Width = EllipseSize;
-                        
+                        if ((bool)checkSquare.IsChecked)
+                        {
+                            ellipse.RadiusX = 0;
+                            ellipse.RadiusY = 0;
+                        }
+                        else if(!(bool)checkSquare.IsChecked)
+                        {
+                            ellipse.RadiusX = 150;
+                            ellipse.RadiusY = 150;
+                        }
+
                         ellipse.Name = $"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}";
                         
                         myCoordinates.Add($"n{alphabet[h]}_{myWidth - w - 1}_{ellipseCounter}");
@@ -375,7 +407,7 @@ namespace WPF_FirstProject
                         if (w == 0)
                         {
                             Label lblCoordinateAlphabet = new Label();
-                            lblCoordinateAlphabet.FontSize = EllipseSize * 0.66;
+                            lblCoordinateAlphabet.FontSize = EllipseSize * 0.66; //magic numbers
                             lblCoordinateAlphabet.Height = EllipseSize * 1.33;
                             lblCoordinateAlphabet.Width = EllipseSize * 1.5;
 
@@ -389,7 +421,7 @@ namespace WPF_FirstProject
                                 countAlphabet += 1;
                             }
                             //lblCoordinateAlphabet.Content = alphabet[countAlphabet2].ToString() + alphabet[countAlphabet].ToString();
-                            lblCoordinateAlphabet.Content = alphabet[h].ToString();
+                            lblCoordinateAlphabet.Content = alphabet[h]; //tostring overbodig
                             //lblCoordinateAlphabet.Background = Brushes.Aquamarine;
                             lblCoordinateAlphabet.Margin = new Thickness(0, -500 + (h * EllipseSize * EllipseDistance), alphabeticLabelDistance, 0);
                             lblCoordinateAlphabet.Foreground = Brushes.Black;
@@ -397,7 +429,7 @@ namespace WPF_FirstProject
                             gLabelTest.Children.Add(lblCoordinateAlphabet);
                         }
 
-                        ellipseCounter += 1;
+                        ellipseCounter++;
 
                     }
 
@@ -413,11 +445,11 @@ namespace WPF_FirstProject
             else
             {
                 
-                MessageBox.Show("Getal kan niet boven de 26 zijn");
+                MessageBox.Show("Maximum alphabet count");
             }
-            
 
-            
+
+
         }
 
         private void addValue(object sender, RoutedEventArgs e)
@@ -440,30 +472,42 @@ namespace WPF_FirstProject
 
         private void ViewCoordinate(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine($"Test:{txbCoordinatePicker.Text}||");
+            //Debug.WriteLine($"Test:{txbCoordinatePicker.Text}||");
             if (txbCoordinatePicker.Text != "")
             {
-                int numberInTxb = int.Parse(txbCoordinatePicker.Text);
-
-                foreach (string coordinate in myCoordinates)
+                if (int.TryParse(txbCoordinatePicker.Text, out int parsedNumber))
                 {
-                    if (coordinate.Contains(txbCoordinatePicker.Text))
+                    int numberInTxb = int.Parse(txbCoordinatePicker.Text.Trim());
+
+                    foreach (string coordinate in myCoordinates)
                     {
-                        
-                        string[] splitCoordinate = coordinate.Replace("n", "").Split("_");
-                        if (splitCoordinate[2] == txbCoordinatePicker.Text.Trim())
+                        if (coordinate.Contains(txbCoordinatePicker.Text))
                         {
-                            string convertedCoordinate = $"{splitCoordinate[0]}{splitCoordinate[1]}";
-                            MessageBox.Show(convertedCoordinate);
+
+                            string[] splitCoordinate = coordinate.Replace("n", "").Split("_");
+                            if (splitCoordinate[2] == txbCoordinatePicker.Text.Trim())
+                            {
+                                string convertedCoordinate = $"{splitCoordinate[0]}{splitCoordinate[1]}";
+                                MessageBox.Show(convertedCoordinate);
+                            }
+
                         }
-                        
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Input needs to be a number", MessageBoxButton.OK.ToString());
+                    
+                }
+
+                
+
+                
 
             }
             else
             {
-                MessageBox.Show("Test");
+                MessageBox.Show("Box can't be empty");
             }
         }
 
@@ -472,25 +516,25 @@ namespace WPF_FirstProject
             int checkNumber;
             string formatCoordinate;
             //string formatNumber;
-            string emptyWellsColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            string emptyWellsColor = cbChooseColor.SelectedItem as string;
             var coordinateColor = (Color)ColorConverter.ConvertFromString(emptyWellsColor);
 
             foreach (object child in gMyGrid.Children)
             {
-                Ellipse ellipse = child as Ellipse;
+                Rectangle ellipse = child as Rectangle;
 
                 if (int.TryParse(txbColorCreator.Text.Trim(), out checkNumber))
                 {
-                    //Debug.WriteLine($"{txbColorCreator.Text} is a number");
-                    if (ellipse.Name.Split("_")[2].Contains(txbColorCreator.Text.Trim()))
+                    //Number
+                    if (ellipse.Name.Split("_")[2] == txbColorCreator.Text.Trim())
                     {
+                        Debug.WriteLine(ellipse.Name.Split("_")[2]);
                         ellipse.Fill = new SolidColorBrush(coordinateColor);
                     }
                 }
                 else
                 {
-                    //Debug.WriteLine($"{txbColorCreator.Text} is alphabetic");
-                    //formatCoordinate = txbColorCreator.Text.ToUpper();
+                    //Alphabetic
                     formatCoordinate = $"n{txbColorCreator.Text[0].ToString().ToUpper()}_{txbColorCreator.Text.Split(txbColorCreator.Text[0])[1]}";
                    
                     if (ellipse.Name.Contains(formatCoordinate))
@@ -508,7 +552,7 @@ namespace WPF_FirstProject
 
         private void AddColor(object sender, RoutedEventArgs e)
         {
-            string chosenColor = cbChooseColor.SelectedItem.ToString().Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim();
+            string chosenColor = cbChooseColor.SelectedItem as string;
             int red;
             int green;
             int blue;
@@ -530,10 +574,10 @@ namespace WPF_FirstProject
 
                 ////Debug.WriteLine($"Testformat: {testFormat}");
                 //Debug.WriteLine($"{red}\r\n{green}\r\n{blue}");
-                MessageBox.Show("RGB is not allowed in this version");
+                //MessageBox.Show("RGB is not allowed in this version");
             }
 
-            if (cbChooseEmptyColor.Items.Contains(newColor) == false && newColor.Contains("#") || char.IsLetter(newColor.FirstOrDefault()))
+            if (!cbChooseEmptyColor.Items.Contains(newColor) && newColor.Contains("#") || char.IsLetter(newColor.FirstOrDefault()))
             {
                 try
                 {
@@ -552,7 +596,65 @@ namespace WPF_FirstProject
                 
                 
             }
+            else
+            {
+                MessageBox.Show("This format is not supported");
+            }
             
+        }
+
+        private void checkSquare_Click(object sender, RoutedEventArgs e)
+        {
+            string theShape;
+            string colour = "red";
+            var convertColor = (Color)ColorConverter.ConvertFromString(colour);
+            if ((bool)checkSquare.IsChecked)
+            {
+                theShape = "rectangle";
+                
+                
+            }
+            else
+            {
+                squareChecked = (bool)checkSquare.IsChecked;
+                theShape = "circle";
+            }
+            KleineTest(theShape, colour);
+        }
+
+        public void KleineTest(string myShape, string color )
+        {
+            var convertColor = (Color)ColorConverter.ConvertFromString(color);
+            if (myShape == "rectangle")
+            {
+                gTestGrid.Children.Clear();
+                Rectangle rectangle = new Rectangle();
+                rectangle.Fill = new SolidColorBrush(convertColor);
+                rectangle.Stroke = new SolidColorBrush(convertColor);
+                rectangle.StrokeThickness = 30 * 0.08F;
+                rectangle.Height = 30;
+                rectangle.Width = 30;
+                //rectangle.RadiusX = 15;
+                //rectangle.RadiusY = 15;
+
+                gTestGrid.Children.Add(rectangle);
+            }
+            else if (myShape == "circle")
+            {
+                gTestGrid.Children.Clear();
+                Rectangle ellipse = new Rectangle();
+                ellipse.Fill = new SolidColorBrush(convertColor);
+                ellipse.Stroke = new SolidColorBrush(convertColor);
+                ellipse.StrokeThickness = 30 * 0.08F;
+                ellipse.Height = 30;
+                ellipse.Width = 30;
+                
+
+                gTestGrid.Children.Add(ellipse);
+            }
+
+            
+
         }
     }
 }

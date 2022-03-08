@@ -59,6 +59,8 @@
                 <RotateTransform Angle="0"/>
             </Grid.RenderTransform>
         </Grid>
+        
+        <Grid x:Name="gTestGrid"></Grid>
 
         <Label Content="Circle size" x:Name="lblCircleSize" FontSize="20" HorizontalAlignment="Right" Margin="0,451,330,0" VerticalAlignment="Top" Width="200" Height="1220" />
         <Slider Name="slCircleSize" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Minimum="1" Maximum="10" HorizontalAlignment="Right" Margin="975,450,10,0" VerticalAlignment="Top" Width="95" Height="120">
@@ -74,6 +76,9 @@
 
         <CheckBox x:Name="checkRotate" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,200" VerticalContentAlignment="Center">
             <TextBlock Text="Rotate" VerticalAlignment="Center"/>
+        </CheckBox>
+        <CheckBox x:Name="checkSquare" Click="checkSquare_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,200" VerticalContentAlignment="Center">
+            <TextBlock Text="Square" VerticalAlignment="Center"/>
         </CheckBox>
         <Button Content="Reset kleur" HorizontalAlignment="Right" Margin="0,0,0,30" VerticalAlignment="Bottom" Click="Button_Click" Height="81" Width="252" FontSize="24"/>
         <Button Content="Toepassen" HorizontalAlignment="Right" Margin="0,0,0,115" VerticalAlignment="Bottom" Click="btnApply" Height="81" Width="252" FontSize="30"/>
