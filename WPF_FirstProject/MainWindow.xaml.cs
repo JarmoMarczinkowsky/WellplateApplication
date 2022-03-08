@@ -34,7 +34,7 @@ namespace WPF_FirstProject
         List<string> myCoordinates = new List<string>();
         List<string> coloredCircle = new List<string>();
         List<string> notColoredCircle = new List<string>();
-        bool squareChecked;
+        //bool squareChecked;
         int totalCircles;
 
         public MainWindow()
@@ -579,6 +579,11 @@ namespace WPF_FirstProject
 
             if (!cbChooseEmptyColor.Items.Contains(newColor) && newColor.Contains("#") || char.IsLetter(newColor.FirstOrDefault()))
             {
+                if (char.IsLetter(newColor.FirstOrDefault()))
+                {
+                    newColor = char.ToUpper(newColor.First()) + newColor.Substring(1).ToLower();
+                    
+                }
                 try
                 {
                     var convertColor = (Color)ColorConverter.ConvertFromString(newColor);
@@ -589,7 +594,7 @@ namespace WPF_FirstProject
                 }
                 catch (Exception E)
                 {
-                    MessageBox.Show("Something went wrong:\r\n" + E.ToString());
+                    MessageBox.Show("Something went wrong:" +  Environment.NewLine + E.ToString());
                 }
 
 
@@ -605,56 +610,56 @@ namespace WPF_FirstProject
 
         private void checkSquare_Click(object sender, RoutedEventArgs e)
         {
-            string theShape;
-            string colour = "red";
-            var convertColor = (Color)ColorConverter.ConvertFromString(colour);
-            if ((bool)checkSquare.IsChecked)
-            {
-                theShape = "rectangle";
+            //string theShape;
+            //string colour = "red";
+            //var convertColor = (Color)ColorConverter.ConvertFromString(colour);
+            //if ((bool)checkSquare.IsChecked)
+            //{
+            //    theShape = "rectangle";
                 
                 
-            }
-            else
-            {
-                squareChecked = (bool)checkSquare.IsChecked;
-                theShape = "circle";
-            }
-            KleineTest(theShape, colour);
+            //}
+            //else
+            //{
+            //    squareChecked = (bool)checkSquare.IsChecked;
+            //    theShape = "circle";
+            //}
+            //KleineTest(theShape, colour);
         }
 
-        public void KleineTest(string myShape, string color )
-        {
-            var convertColor = (Color)ColorConverter.ConvertFromString(color);
-            if (myShape == "rectangle")
-            {
-                gTestGrid.Children.Clear();
-                Rectangle rectangle = new Rectangle();
-                rectangle.Fill = new SolidColorBrush(convertColor);
-                rectangle.Stroke = new SolidColorBrush(convertColor);
-                rectangle.StrokeThickness = 30 * 0.08F;
-                rectangle.Height = 30;
-                rectangle.Width = 30;
-                //rectangle.RadiusX = 15;
-                //rectangle.RadiusY = 15;
+        //public void KleineTest(string myShape, string color )
+        //{
+        //    var convertColor = (Color)ColorConverter.ConvertFromString(color);
+        //    if (myShape == "rectangle")
+        //    {
+        //        gTestGrid.Children.Clear();
+        //        Rectangle rectangle = new Rectangle();
+        //        rectangle.Fill = new SolidColorBrush(convertColor);
+        //        rectangle.Stroke = new SolidColorBrush(convertColor);
+        //        rectangle.StrokeThickness = 30 * 0.08F;
+        //        rectangle.Height = 30;
+        //        rectangle.Width = 30;
+        //        //rectangle.RadiusX = 15;
+        //        //rectangle.RadiusY = 15;
 
-                gTestGrid.Children.Add(rectangle);
-            }
-            else if (myShape == "circle")
-            {
-                gTestGrid.Children.Clear();
-                Rectangle ellipse = new Rectangle();
-                ellipse.Fill = new SolidColorBrush(convertColor);
-                ellipse.Stroke = new SolidColorBrush(convertColor);
-                ellipse.StrokeThickness = 30 * 0.08F;
-                ellipse.Height = 30;
-                ellipse.Width = 30;
+        //        gTestGrid.Children.Add(rectangle);
+        //    }
+        //    else if (myShape == "circle")
+        //    {
+        //        gTestGrid.Children.Clear();
+        //        Rectangle ellipse = new Rectangle();
+        //        ellipse.Fill = new SolidColorBrush(convertColor);
+        //        ellipse.Stroke = new SolidColorBrush(convertColor);
+        //        ellipse.StrokeThickness = 30 * 0.08F;
+        //        ellipse.Height = 30;
+        //        ellipse.Width = 30;
                 
 
-                gTestGrid.Children.Add(ellipse);
-            }
+        //        gTestGrid.Children.Add(ellipse);
+        //    }
 
             
 
-        }
+        //}
     }
 }
